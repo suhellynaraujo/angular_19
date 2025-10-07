@@ -1,0 +1,53 @@
+<div class="container">
+    <h1>Lista de Compras</h1>
+    <!--[( )] recebe e envia o valor da variavel
+    [] recebe o valor do componente-->
+    <form #frm="ngForm" class="add-item-form"  (ngSubmit)="adicionarItem()">
+        <input type="text" id="item" name="item" [(ngModel)]="item" 
+        placeholder="Digite o nome do item"/>
+        <button type="submit">Adicionar</button>
+
+        <button type="button" (click)="limparLista()">Limpar lista</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Item</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (elemento of lista; track elemento.id) {
+                <tr>
+                    <td>{{elemento.id}}</td>
+                    <td><span [ngClass]="{'item-riscado': elemento.comprado}">{{elemento.nome}}</span></td>
+                    <td><input type="checkbox" (click)="riscarItem(elemento)" [checked]="elemento.comprado"></td>
+                </tr>
+            } @empty {
+                <tr colspan="3">
+                    Nenhum item adicionado.
+                </tr>
+            }
+              <!--<tr *ngFor="let elemento of lista">
+                    <td>{{elemento.id}}</td>
+                    <td>{{elemento.nome}}</td>
+                    <td><input type="checkbox"></td>
+                </tr> -->
+        </tbody>
+    </table>
+    <form class="example-form">
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+           placeholder="Ex. pat@example.com">
+    <mat-hint>Errors appear instantly!</mat-hint>
+    @if (emailFormControl.hasError('email') && !emailFormControl.hasError('required')) {
+      <mat-error>Please enter a valid email address</mat-error>
+    }
+    @if (emailFormControl.hasError('required')) {
+      <mat-error>Email is <strong>required</strong></mat-error>
+    }
+  </mat-form-field>
+</form>
+</div>
